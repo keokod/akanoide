@@ -46,14 +46,36 @@ and open the template in the editor.
                     .color("black")
 
             missile.bind('EnterFrame', function () {
-                
+                if (this.x > maxX) { //si on dépasse la fenêtre de droite on passe à gauche
+                    directionX = "left";
+
+                    //debugger;
+                }
+
+                if (this.x < 0) { //si on dépasse la fenêtre de droite on passe à gauche
+                    directionX = "right";
+                   // debugger;
+                }
 
 
-                this.x = this.x - 1;
+                if (directionX == "left") { //si on dépasse la fenêtre de droite on passe à gauche
+                this.x = this.x -1;
+
+                    //debugger;
+                }
+
+                if (directionX == "right") { //si on dépasse la fenêtre de droite on passe à gauche
+                this.x = this.x + 1;
+
+                    //debugger;
+                }
+
+
+
 
 
                 //console.log(this.x);
-                this.y = this.y + 1;
+               // this.y = this.y + 1;
             });
 
 
