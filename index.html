@@ -29,6 +29,7 @@ and open the template in the editor.
             Crafty.background('rgb(127,127,127)');
 
             var vaisseau = Crafty.e("2D, Canvas, Color, Keyboard"); //déclaration du vaisseau
+            Crafty.timer.FPS(100);
 
             vaisseau.attr({x: 300, y: 580, w: 200, h: 20})  //w taille de du vaisseau
                     .color("red")
@@ -43,9 +44,45 @@ and open the template in the editor.
             var missile = Crafty.e("2D, Canvas, Color, Keyboard"); //déclaration du vaisseau
 
             missile.attr({x: 400, y: 560, w: 20, h: 20})  //w taille de du vaisseau
-                    .color("black")
+                    .color("black");
 
             missile.bind('EnterFrame', function () {
+
+                if( missile.y == 560 &&( (vaisseau.x+100)<missile.x ) )//le missile touche le vaisseau
+                {
+                    directionY = "up";
+                }
+                
+                console.log(vaisseau.x);
+                
+                //direction et déplacement vertical
+                if (this.y > maxY) { //si on dépasse le bas on doit remonter
+                    directionY = "up";
+
+                    //debugger;
+                }
+
+                if (this.y < 0) { //si on dépasse on redescent
+                    directionY = "down";
+                   // debugger;
+                }
+
+
+                if (directionY == "up") { //si on dépasse la fenêtre de droite on passe à gauche
+                this.y = this.y -1;
+
+                    //debugger;
+                }
+
+                if (directionY == "down") { //si on dépasse la fenêtre de droite on passe à gauche
+                this.y = this.y + 1;
+
+                    //debugger;
+                }
+
+                
+                
+                //direction et déplacement horizontal
                 if (this.x > maxX) { //si on dépasse la fenêtre de droite on passe à gauche
                     directionX = "left";
 
@@ -78,6 +115,9 @@ and open the template in the editor.
                // this.y = this.y + 1;
             });
 
+            function choixDirection(){
+                
+            }
 
 
 
