@@ -15,17 +15,18 @@ and open the template in the editor.
         <div id="game"></div>
         <script type="text/javascript" src="https://rawgithub.com/craftyjs/Crafty/release/dist/crafty-min.js"></script>
         <script>
-    //position des limites de la zone 
+            //position des limites de la zone 
+
             var maxX = 800; //800px max de la fenêtre
             var maxY = 600; //600px max de la fenêtre
 
-    //direction de la balle on initialise le missile pour aller en haut à droite
+            //direction de la balle on initialise le missile pour aller en haut à droite
             var directionX = "right"; //direction horizontal Up ou Down
             var directionY = "up"; //direction vertical Left ou Right 
 
 
             Crafty.init(maxX, maxY); //initialisation de la fenêtre de jeux
-
+            Crafty.background('rgb(127,127,127)');
 
             var vaisseau = Crafty.e("2D, Canvas, Color, Keyboard"); //déclaration du vaisseau
 
@@ -43,86 +44,26 @@ and open the template in the editor.
 
             missile.attr({x: 400, y: 560, w: 20, h: 20})  //w taille de du vaisseau
                     .color("black")
-                    .bind('KeyDown', function (e) {
-                        if (e.key == Crafty.keys.SPACE) {
-                            console.log("XXXX  === " + this.x + " <==>Missile pos YYYY ==== " + this.y);
+
+            missile.bind('EnterFrame', function () {
+                
 
 
-                            var modifX = missilAleatoire(this.x, directionX);
-                  
-                            var modifY= missilAleatoire(this.y, directionY);
-                            
-                            if(directionX == "right"){
-                                console.log("right>");
-                                this.x += modifX ;//on va vers la droite
-                            }
-                            
-                            if(directionY =="left"){
-                             
-                                debugger;
-                                console.log("<left");
-                                this.x -= modifX ;//on va vers la droite               
-                            }
-                            //console.log(directionH);
-                            // console.log(this.x += missilAleatoire());
-
-                        }
-                    });
+                this.x = this.x - 1;
 
 
-            function missilAleatoire(positionMissile, direction) {
-                var coef = 100;
-
-                console.log("position =>" + direction);
-                switch (direction) {
-                    case "right": //le missille doit continuer à droite ajouter
-                        if (positionMissile > maxX) //si on dépasse l'écran de droite, on change la direction directionX = gauche
-                        {
-                            console.log("changement de direction vert la gauche <<<<<<");
-                            directionX = "left"; //direction à gauche
-                            debugger;
-                            return  Math.random() *coef; //diminution de la position  X 
-                        }
-                            console.log(">>>>>>>>>>>>>>>>>>>>");
-                        return  Math.random() * coef; //autmentation de la postion X
-                        break;
-
-                    case "left": //le missille doit continuer à droite ajouter
-                        if (positionMissile < 0) //si on dépasse l'écran de droite, on change la direction directionX = gauche
-                        {
-                            console.log("changement de direction vert la droite>>>>>");
-                            directionX = "right";
-                            return  Math.random() * coef;
-                        }
-                            console.log("<<<<<<<<<<<<<<<<<<<<<");
-                        return  Math.random() * coef;
-                        break;
+                //console.log(this.x);
+                this.y = this.y + 1;
+            });
 
 
-                    case "up": //le missille doit continuer à droite ajouter
-                        if (positionMissile < 0) //si le missile monte trop haute
-                        {
-                            console.log("changement de direction vert le bas_;_;_;_;_;_;_;_");
-                            directionY = "down";
-                            return  Math.random() * coef;
-                        }
-                        return  Math.random() * -coef;
-
-                    case "down": //le missille doit continuer à droite ajouter
-                        if (positionMissile > maxY) //si on dépasse l'écran de droite, on change la direction directionX = gauche
-                        {
-                            console.log("changement de direction vert le haut ^^^^^^^^^ŝ");
-                            directionY = "up";
-                            return  Math.random() * coef;
-                        }
-                        return  Math.random() * coef;
-                }
-            }
 
 
             function changeDirection(positionMissile) {
                 console.log(posiionMissile);
             }
         </script>
+
+
     </body>
 </html>
