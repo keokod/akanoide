@@ -1,8 +1,10 @@
      function lancer() {
 
          document.getElementById('intro').style.display = 'none';
+         
 
-
+         
+         var vaisseau = Crafty.e("2D, Canvas, Color, Keyboard"); //déclaration du vaisseau
          fps = 300; //initalise la frame à 300 pour démarrer le jeux
          Crafty.timer.FPS(fps); //on lance le jeu
          vaisseau.attr({ //initialisaion de la forme du vaisseau
@@ -22,7 +24,7 @@
              });
 
 
-         var missile = Crafty.e("2D, Canvas, Color, Keyboard"); //déclaration du vaisseau
+         var missile = Crafty.e("2D, Canvas, Color, Collision"); //déclaration du vaisseau
 
          missile.attr({ //initialisaion de la forme du missile
                  x: maxX / 2 - 10,
@@ -32,6 +34,15 @@
              }) //w taille de du vaisseau
              .color("white");
 
+        var brique = Crafty.e("2D, Canvas, Color, Obstacle");
+         brique.attr({ //initialisaion de la forme du missile
+                 x: maxX / 2 - 10,
+                 y: 200,
+                 w: 100,
+                 h: 100
+             }) //w taille de du vaisseau
+             .color("orange");
+    
          missile.bind('EnterFrame', function() {
 
              if (missile.y == 560) //perdu s'il sort du jeux
@@ -39,17 +50,15 @@
                  if (((vaisseau.x) > (missile.x)) || ((vaisseau.x + 200) < (missile.x))) { //le missile+10 pour la correction du centre missile
                      //  alert("perdu |"+missile.x+"  XXX missile |" + (vaisseau.x) +"<<---- >>"+ (vaisseau.x+200)+"bord vaisseau");
 
-                     Crafty.timer.stop(); //on stop le jeu
-                     // debugger;
-                     alert('fin');
-                     document.getElementById('end').style.display = 'block';
+                //********************************************* END  *********************************************
+                //Crafty.timer.stop(); //on stop le jeu
+                // debugger;
+                // document.getElementById('end').style.display = 'block';
                  }
                  directionY = "up";
              }
 
-             console.log(vaisseau.x);
-
-             //direction et déplacement vertical
+                //direction et déplacement vertical
              if (this.y > maxY) { //si on dépasse le bas on doit remonter
                  directionY = "up";
 
@@ -101,8 +110,13 @@
                  //debugger;
              }
 
-         });
+         })
+         .checkHits('Obstacle').bind("HitOn", function(hitData) {//on vérifie à la volé la collision avec la brique
+
+    console.log(hitData);
+  });
          
-               run = 1;//on a lancé le jeux
+
+
      }
      
