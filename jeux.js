@@ -28,8 +28,8 @@
       missile.attr({ //initialisaion de la forme du missile
         x: maxX / 2 - 10,
         y: 560,
-        w: 20,
-        h: 20
+        w: 10,
+        h: 10
        }) //w taille de du vaisseau
        .color("white");
 
@@ -50,21 +50,21 @@
          w: 30,
          h: 30
         }) //w taille de du vaisseau
-        .color("orange");
-      
-       
-       for (var j = 0; j < 5; j++) {
-        
-                var brique = Crafty.e("2D, Canvas, Color, Obstacle");
+        .color(256,(i*i*i),200);
 
-       brique.attr({ //initialisaion de la forme du missile
-         x: 50 + i * decadeH, //on augment que les horizontal
-         y: 50 + j *decadeV,
-         w: 30,
-         h: 30
-        }) //w taille de du vaisseau
-        .color("orange");
-       
+
+       for (var j = 0; j < 5; j++) {
+
+        var brique = Crafty.e("2D, Canvas, Color, Obstacle");
+
+        brique.attr({ //initialisaion de la forme du missile
+          x: 50 + i * decadeH, //on augment que les horizontal
+          y: 50 + j * decadeV,
+          w: 30,
+          h: 30
+         }) //w taille de du vaisseau
+         .color(256,(200+j*j*j),150);
+
        }
       }
 
@@ -76,9 +76,9 @@
          //  alert("perdu |"+missile.x+"  XXX missile |" + (vaisseau.x) +"<<---- >>"+ (vaisseau.x+200)+"bord vaisseau");
 
          //********************************************* END  *********************************************
-         //Crafty.timer.stop(); //on stop le jeu
+         Crafty.timer.stop(); //on stop le jeu
          // debugger;
-         // document.getElementById('end').style.display = 'block';
+          document.getElementById('end').style.display = 'block';
         }
        }
 
@@ -137,6 +137,7 @@
 
        if (directionX == 'left') {
         directionX = 'right';
+        
        }
        else { //sinon cela veut dire que c'est à right donc il faut passer par left
         directionX = 'left';
