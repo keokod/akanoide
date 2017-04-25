@@ -26,12 +26,12 @@ and open the template in the editor.
 
 
             Crafty.init(maxX, maxY); //initialisation de la fenêtre de jeux
-            Crafty.background('rgb(127,127,127)');
+            Crafty.background('rgb(127,127,127)');//couleur de fond du jeux
 
             var vaisseau = Crafty.e("2D, Canvas, Color, Keyboard"); //déclaration du vaisseau
-            Crafty.timer.FPS(100);
+            Crafty.timer.FPS(300);//vitesse du jeux
 
-            vaisseau.attr({x: 300, y: 580, w: 200, h: 20})  //w taille de du vaisseau
+            vaisseau.attr({x: maxX/2-100, y: 580, w: 200, h: 20})  //w taille de du vaisseau (max/2-100 pour center le vaisseau)
                     .color("red")
                     .bind('KeyDown', function (e) {
                         if (e.key == Crafty.keys.LEFT_ARROW) {
@@ -43,13 +43,16 @@ and open the template in the editor.
 
             var missile = Crafty.e("2D, Canvas, Color, Keyboard"); //déclaration du vaisseau
 
-            missile.attr({x: 400, y: 560, w: 20, h: 20})  //w taille de du vaisseau
+            missile.attr({x: maxX/2-10, y: 560, w: 20, h: 20})  //w taille de du vaisseau
                     .color("black");
 
             missile.bind('EnterFrame', function () {
 
-                if( missile.y == 560 &&( (vaisseau.x+100)<missile.x ) )//le missile touche le vaisseau
+                if( missile.y == 560 )//perdu s'il sort du jeux
                 {
+			if( ((vaisseau.x)> (missile.x)) || ((vaisseau.x+200) < (missile.x))){ //le missile+10 pour la correction du centre missile
+			alert("perdu |"+missile.x+"  XXX missile |" + (vaisseau.x) +"<<---- >>"+ (vaisseau.x+200)+"bord vaisseau");
+			}
                     directionY = "up";
                 }
                 
@@ -108,22 +111,11 @@ and open the template in the editor.
                 }
 
 
-
-
-
                 //console.log(this.x);
                // this.y = this.y + 1;
             });
 
-            function choixDirection(){
-                
-            }
 
-
-
-            function changeDirection(positionMissile) {
-                console.log(posiionMissile);
-            }
         </script>
 
 
