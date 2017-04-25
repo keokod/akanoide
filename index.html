@@ -1,19 +1,42 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
-    <head>
-        <title>mini jeux akanoide</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="crafty-min.js"></script>
-    </head>
-    <body>
-        <div id="game"></div>
-        <script type="text/javascript" src="https://rawgithub.com/craftyjs/Crafty/release/dist/crafty-min.js"></script>
+
+<head>
+    <title>mini jeux akanoide</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="crafty-min.js"></script>
+    <script type="text/javascript" src="jeux.js"></script>
+</head>
+<style>
+    #intro {
+        color: red;
+        font-size: 50px;
+        z-index: 10;
+        position: relative;
+        top: 5em;
+        left: 3em;
+    }
+    
+    #end{
+        color:red;
+        font-size: 50px;
+        z-index: 10;
+        position: relative;
+        top: 5em;
+        left: 3em;
+        display:none;
+    }
+</style>
+
+<body>
+    <main>
+        <div id="game">
+            <div id="intro">appuyer sur une touche <br/> pour commencer le jeux</div>
+            <div id="end">GAME OVER</div>
+        </div>
+
+
         <script>
             //position des limites de la zone 
 
@@ -24,100 +47,28 @@ and open the template in the editor.
             var directionX = "right"; //direction horizontal Up ou Down
             var directionY = "up"; //direction vertical Left ou Right 
 
+            var fps = 0; //vitesse d'avancement 0 = arrêt, 300 = avancement normal
+
+
 
             Crafty.init(maxX, maxY); //initialisation de la fenêtre de jeux
-            Crafty.background('rgb(127,127,127)');//couleur de fond du jeux
+            Crafty.background('rgb(0,0,0)'); //couleur de fond du noir
 
             var vaisseau = Crafty.e("2D, Canvas, Color, Keyboard"); //déclaration du vaisseau
-            Crafty.timer.FPS(300);//vitesse du jeux
 
-            vaisseau.attr({x: maxX/2-100, y: 580, w: 200, h: 20})  //w taille de du vaisseau (max/2-100 pour center le vaisseau)
-                    .color("red")
-                    .bind('KeyDown', function (e) {
-                        if (e.key == Crafty.keys.LEFT_ARROW) {
-                            this.x = this.x - 30;
-                        } else if (e.key == Crafty.keys.RIGHT_ARROW) {
-                            this.x = this.x + 30;
-                        }
-                    });
-
-            var missile = Crafty.e("2D, Canvas, Color, Keyboard"); //déclaration du vaisseau
-
-            missile.attr({x: maxX/2-10, y: 560, w: 20, h: 20})  //w taille de du vaisseau
-                    .color("black");
-
-            missile.bind('EnterFrame', function () {
-
-                if( missile.y == 560 )//perdu s'il sort du jeux
-                {
-			if( ((vaisseau.x)> (missile.x)) || ((vaisseau.x+200) < (missile.x))){ //le missile+10 pour la correction du centre missile
-			alert("perdu |"+missile.x+"  XXX missile |" + (vaisseau.x) +"<<---- >>"+ (vaisseau.x+200)+"bord vaisseau");
-			}
-                    directionY = "up";
-                }
+            document.addEventListener('keydown', (event) => { //si on clique sur n'importe quel touche on commence je jeux
+                fps = 300;
+                console.log("demarrer le jeux");
+                Crafty.timer.FPS(fps); //vitesse du jeux
+                document.getElementById('intro').style.display = 'none';
+                lancer();
                 
-                console.log(vaisseau.x);
-                
-                //direction et déplacement vertical
-                if (this.y > maxY) { //si on dépasse le bas on doit remonter
-                    directionY = "up";
-
-                    //debugger;
-                }
-
-                if (this.y < 0) { //si on dépasse on redescent
-                    directionY = "down";
-                   // debugger;
-                }
-
-
-                if (directionY == "up") { //si on dépasse la fenêtre de droite on passe à gauche
-                this.y = this.y -1;
-
-                    //debugger;
-                }
-
-                if (directionY == "down") { //si on dépasse la fenêtre de droite on passe à gauche
-                this.y = this.y + 1;
-
-                    //debugger;
-                }
-
-                
-                
-                //direction et déplacement horizontal
-                if (this.x > maxX) { //si on dépasse la fenêtre de droite on passe à gauche
-                    directionX = "left";
-
-                    //debugger;
-                }
-
-                if (this.x < 0) { //si on dépasse la fenêtre de droite on passe à gauche
-                    directionX = "right";
-                   // debugger;
-                }
-
-
-                if (directionX == "left") { //si on dépasse la fenêtre de droite on passe à gauche
-                this.x = this.x -1;
-
-                    //debugger;
-                }
-
-                if (directionX == "right") { //si on dépasse la fenêtre de droite on passe à gauche
-                this.x = this.x + 1;
-
-                    //debugger;
-                }
-
-
-                //console.log(this.x);
-               // this.y = this.y + 1;
             });
 
-
+       
         </script>
 
+    </main>
+</body>
 
-    </body>
 </html>
