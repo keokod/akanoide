@@ -18,14 +18,14 @@
         left: 3em;
     }
     
-    #end{
-        color:red;
+    #end {
+        color: red;
         font-size: 50px;
         z-index: 10;
         position: relative;
         top: 5em;
         left: 3em;
-        display:none;
+        display: none;
     }
 </style>
 
@@ -49,23 +49,15 @@
 
             var fps = 0; //vitesse d'avancement 0 = arrêt, 300 = avancement normal
 
-
+            var run = 0; //0 = arret, 1 = en cour de jeux
 
             Crafty.init(maxX, maxY); //initialisation de la fenêtre de jeux
             Crafty.background('rgb(0,0,0)'); //couleur de fond du noir
 
             var vaisseau = Crafty.e("2D, Canvas, Color, Keyboard"); //déclaration du vaisseau
 
-            document.addEventListener('keydown', (event) => { //si on clique sur n'importe quel touche on commence je jeux
-                fps = 300;
-                console.log("demarrer le jeux");
-                Crafty.timer.FPS(fps); //vitesse du jeux
-                document.getElementById('intro').style.display = 'none';
-                lancer();
-                
-            });
-
-       
+document.addEventListener("keydown", lancer());
+            
         </script>
 
     </main>

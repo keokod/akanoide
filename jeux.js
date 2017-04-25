@@ -1,5 +1,8 @@
      function lancer() {
 
+         document.getElementById('intro').style.display = 'none';
+
+
          fps = 300; //initalise la frame à 300 pour démarrer le jeux
          Crafty.timer.FPS(fps); //on lance le jeu
          vaisseau.attr({ //initialisaion de la forme du vaisseau
@@ -18,6 +21,7 @@
                  }
              });
 
+
          var missile = Crafty.e("2D, Canvas, Color, Keyboard"); //déclaration du vaisseau
 
          missile.attr({ //initialisaion de la forme du missile
@@ -34,11 +38,11 @@
              {
                  if (((vaisseau.x) > (missile.x)) || ((vaisseau.x + 200) < (missile.x))) { //le missile+10 pour la correction du centre missile
                      //  alert("perdu |"+missile.x+"  XXX missile |" + (vaisseau.x) +"<<---- >>"+ (vaisseau.x+200)+"bord vaisseau");
-        
+
                      Crafty.timer.stop(); //on stop le jeu
-                    // debugger;
+                     // debugger;
                      alert('fin');
-                document.getElementById('end').style.display = 'block';
+                     document.getElementById('end').style.display = 'block';
                  }
                  directionY = "up";
              }
@@ -98,5 +102,7 @@
              }
 
          });
+         
+               run = 1;//on a lancé le jeux
      }
      
