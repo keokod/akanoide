@@ -12,7 +12,6 @@
     #intro {
         color: red;
         font-size: 50px;
-
     }
     
     #end {
@@ -29,10 +28,10 @@
 <body>
     <main>
         <div id="game">
-            <div id="intro">appuyer sur une touche <br/> pour commencer le jeux</div>
+            <div id="intro">appuyer sur une touche
+                <br/> pour commencer le jeux</div>
             <div id="end">GAME OVER</div>
         </div>
-
 
         <script>
             //position des limites de la zone 
@@ -47,23 +46,15 @@
             var fps = 0; //vitesse d'avancement 0 = arrêt, 300 = avancement normal
 
             var run = 0; //0 = arret, 1 = en cour de jeux
-            
-            
 
             Crafty.init(maxX, maxY); //initialisation de la fenêtre de jeux
             Crafty.background('rgb(0,0,0)'); //couleur de fond du noir
-            document.addEventListener("keydown", ()=>{//dès qu'on tape sur touche on commence le jeux
-               // document.getElementById('intro').style.display = 'none';
+            document.addEventListener("keydown", () => { //dès qu'on tape sur touche on commence le jeux
+                // document.getElementById('intro').style.display = 'none';
             });
-            
+
             document.addEventListener("keydown", lancer());
-            
-
         </script>
-        
-        
-
-
 
     </main>
 </body>
