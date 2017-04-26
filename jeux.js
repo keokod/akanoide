@@ -1,6 +1,6 @@
      function lancer() {
 
-      document.getElementById('intro').style.display = 'none';
+
 
       var vaisseau = Crafty.e("2D, Canvas, Color, Keyboard"); //déclaration du vaisseau
       fps = 400; //initalise la frame à 300 pour démarrer le jeux
@@ -50,7 +50,7 @@
          w: 30,
          h: 30
         }) //w taille de du vaisseau
-        .color(256,(i*i*i),200);
+        .color(256, (i * i * i), 200);
 
 
        for (var j = 0; j < 5; j++) {
@@ -63,7 +63,7 @@
           w: 30,
           h: 30
          }) //w taille de du vaisseau
-         .color(256,(200+j*j*j),150);
+         .color(256, (200 + j * j * j), 150);
 
        }
       }
@@ -78,7 +78,7 @@
          //********************************************* END  *********************************************
          Crafty.timer.stop(); //on stop le jeu
          // debugger;
-          document.getElementById('end').style.display = 'block';
+         document.getElementById('end').style.display = 'block';
         }
        }
 
@@ -101,7 +101,7 @@
        }
 
        if (directionY == "down") { //si on dépasse la fenêtre de droite on passe à gauche
-        this.y = this.y + 1;
+        this.y = this.y + aleatoire();
 
         //debugger;
        }
@@ -120,7 +120,7 @@
 
 
        if (directionX == "left") { //si on dépasse la fenêtre de droite on passe à gauche
-        this.x = this.x - 1;
+        this.x = this.x - aleatoire();
 
         //debugger;
        }
@@ -133,11 +133,12 @@
 
       })
 
-      .checkHits('Obstacle').bind("HitOn", function(hitData) { //on vérifie à la volé la collision avec la brique
 
-       if (directionX == 'left') {
+.onHit('Obstacle', function(collision) { // méthode qui permet de de supprimer la brique
+ 
+        if (directionX == 'left') {
         directionX = 'right';
-        
+
        }
        else { //sinon cela veut dire que c'est à right donc il faut passer par left
         directionX = 'left';
@@ -149,12 +150,14 @@
        else { //sinon cela veut dire que la direction est up
         directionY = 'up';
        }
-
+        collision[0].obj.destroy();
+     //  debugger;
       });
+
      }
 
 
      function aleatoire() {
-      return Math.random() * (2 - 1) + 1;
+      return Math.random() * (2 - 1) + 1.314;
      }
      

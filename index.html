@@ -12,10 +12,7 @@
     #intro {
         color: red;
         font-size: 50px;
-        z-index: 10;
-        position: relative;
-        top: 5em;
-        left: 3em;
+
     }
     
     #end {
@@ -55,7 +52,10 @@
 
             Crafty.init(maxX, maxY); //initialisation de la fenêtre de jeux
             Crafty.background('rgb(0,0,0)'); //couleur de fond du noir
-
+            document.addEventListener("keydown", ()=>{//dès qu'on tape sur touche on commence le jeux
+               // document.getElementById('intro').style.display = 'none';
+            });
+            
             document.addEventListener("keydown", lancer());
             
 
