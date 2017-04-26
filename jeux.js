@@ -1,9 +1,10 @@
 function lancer() {
 
     var largeurVaisseau = 200;
-    var vaisseau = Crafty.e("2D, Canvas, Color,Vaisseau"); //déclaration du vaisseau
-    fps = 400; //initalise la frame à 300 pour démarrer le jeux
+    var vaisseau = Crafty.e("2D, Canvas, Color,Vaisseau,Keyboard"); //déclaration du vaisseau
+    fps = 200; //initalise la frame à 300 pour démarrer le jeux
     Crafty.timer.FPS(fps); //on lance le jeu
+    
     vaisseau.attr({ //initialisaion de la forme du vaisseau
             x: maxX / 2 - 100,
             y: 580,
@@ -12,7 +13,12 @@ function lancer() {
         }) //w taille de du vaisseau (max/2-100 pour center le vaisseau)
         .color("red")
         .bind('KeyDown', function(e) {
+         
+            runText.destroy();
+            
+            
             if (e.key == Crafty.keys.LEFT_ARROW) {
+  
                 this.x = this.x - 30;
             } else if (e.key == Crafty.keys.RIGHT_ARROW) {
                 this.x = this.x + 30;
@@ -42,7 +48,7 @@ function lancer() {
                 w: 30,
                 h: 30
             }) //w taille de du vaisseau
-            .color(256, (i * i * i), 200);
+            .color(256, (i * i * i), 100);
 
         for (var j = 0; j < 5; j++) {
 
@@ -54,38 +60,31 @@ function lancer() {
                     w: 30,
                     h: 30
                 }) //w taille de du vaisseau
-                .color(256, (200 + j * j * j), 150);
+                .color(256, (aleatoire()*100), 150);
 
         }
     }
 
     missile.bind('EnterFrame', function() {
 
-                if (missile.y > 600) { //s'il touche le bas de l'écran perdu
-                    debugger;
+                if (missile.y > 600) { //s'il touche le bas de l'écran #### GAME OVER ####
+                    
                     Crafty.timer.stop(); //on stop le jeu
                     // debugger;
-                    document.getElementById('end').style.display = 'block';
-                    alert("perdu");
+    var gameOver = Crafty.e('2D, Canvas, Color,Text');
+            
+            
+            gameOver.attr({
+                x: maxX / 2 - 50,
+                y: maxY / 2 -100,
+            }).color('red');
+
+            gameOver.text("game over!").textFont({
+                size: '50px',
+                weight: 'bold',
+            });
+
                 } //perdu s'il le missile du jeux fenêtre du bas
-
-                /*
-
-            if (missile.y == 560) //perdu s'il le missile du jeux fenêtre du bas
-            {
-              //  if (((vaisseau.x) > (missile.x)) || ((vaisseau.x + 200) < (missile.x))) { //le missile+10 pour la correction du centre missile
-               if (missile.y > 200) { //le missile+10 pour la correction du centre missile
-                debugger;
-                    alert("perdu |"+missile.x+"  XXX missile |" + (vaisseau.x) +"<<---- >>"+ (vaisseau.x+200)+"bord vaisseau");
-
-                    //********************************************* END  *********************************************
-                    Crafty.timer.stop(); //on stop le jeu
-                    // debugger;
-                    document.getElementById('end').style.display = 'block';
-                }
-            }
-
-*/
 
                 //direction et déplacement vertical
                 if (this.y > maxY) { //si on dépasse le bas on doit remonter
@@ -143,18 +142,11 @@ function lancer() {
             //  debugger;
         })
         .onHit('Vaisseau', function(collision) { // méthode qui permet de rebondir le missile
-
-            if (directionX == 'left') { //permet de redirectioner à l'opposé quand la ball touche le vaisseau
-                directionX = 'right';
-
-            } else { //sinon cela veut dire que c'est à right donc il faut passer par left
-                directionX = 'left'; //permet de redirectioner à l'opposé quand la ball touche le vaisseau
-            }
-
+        
+            changeDirection();
             vaisseau.attr({ //initialisaion de la forme du vaisseau
                 w: (largeurVaisseau -= 5), //diminuer la taille du vaisseau
             });
-            changeDirection();
 
         })
 
@@ -164,21 +156,20 @@ function lancer() {
 
 function changeDirection() {
 
-    if (directionX == 'left') {
-        directionX = 'right';
-
-    } else { //sinon cela veut dire que c'est à right donc il faut passer par left
-        directionX = 'left';
-    }
-
     if (directionY == 'up') {
         directionY = 'down';
     } else { //sinon cela veut dire que la direction est up
         directionY = 'up';
     }
+        if (directionX == 'right') {
+        directionX = 'left';
 
+    } else { //sinon cela veut dire que c'est à right donc il faut passer par left
+        directionX = 'right';
+    }
+            fps ++;//augmener de la vitesse
 }
 
 function aleatoire() {
-    return Math.random() * (2 - 1) + 1.314;
+    return Math.random() * (2 - 1) + 1;
 }
