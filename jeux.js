@@ -133,9 +133,11 @@ function lancer() {
         .onHit('Brique', function(collision) { // méthode qui permet de de supprimer la brique
             changeDirection();
             collision[0].obj.destroy();
-            totalBrique = totalBrique - 1;
+            if(totalBrique >2){ //ne pas diminuer au maximum de la taille du vaisseau
+            totalBrique = totalBrique - 1;//diminution du vaisseau
+            }
             if (totalBrique == 0) {
-                alert("partie gagné!");
+              //  alert("partie gagné!");
             }
             // debugger;
         })
