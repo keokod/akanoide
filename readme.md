@@ -15,5 +15,15 @@ règle:
 - si la touche touche une belle elle rebondie
 - s'il y a plus de brique a cassé, on a gagné
 
+testeur: Quantin
+Fonctionnalités possibles :
 
+Ajouter le rebond sur la barre selon l'angle 
+Bouger la barre si on reste appuyé sur les touches directionnelles
+menu pause
+fonction restart (boutton qui refresh la page?)
+
+Bugs :
+
+Barre diminue de manière aléatoire ?
 
