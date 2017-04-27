@@ -29,10 +29,44 @@
 </style>
 
 <body>
-    <button>un autre partie</button>
+
+    <div id="about"></div>
+    <button id="partie">un autre partie</button>
     <main>
         <script>
             //position des limites de la zone 
+            var about; //à propo du jeux
+            var url = './rest/licence.json';
+
+
+            function reqListener() {
+                about = this.responseText;
+                about = JSON.parse(about);
+
+                var theDiv = document.getElementById("about");
+
+                document.getElementById("about").innerHTML =
+                    "<ul><li>name game : " + about.nameGame + "</li><li>createur : " + about.nom + "</li><li>licence : " + about.licence + "</li><li>GIT : " + about.git + "</li></ul>";
+
+            }
+
+
+            try { //on essaie de récupérer le json
+                var ajax = new XMLHttpRequest(); //on instancie l'objuet ajax
+                ajax.onload = reqListener; //on l  
+                ajax.open("get", url, true);
+                ajax.send();
+            }
+            catch (erreur) {
+                console.log(erreur);
+                console.log('lecture du fichier illisible');
+            }
+            finally {
+                console.log('lecture du json ok');
+            }
+
+
+            //######################################################""
 
             var maxX = 800; //800px max de la fenêtre
             var maxY = 600; //600px max de la fenêtre
@@ -42,8 +76,6 @@
             var directionY = "up"; //direction vertical Left ou Right 
 
             var fps = 0;
-
-            var run = 0; //0 = arret, 1 = en cour de jeux
 
             Crafty.init(maxX, maxY); //initialisation de la fenêtre de jeux
             Crafty.background('rgb(0,0,0)'); //couleur de fond du noir
@@ -62,20 +94,21 @@
 
 
 
-           localStorage.setItem('run', 'stop'); //enregistrement de l'état du jeux
-      
-           document.addEventListener('keyup', (event) => {
-               if(localStorage.getItem('run') == 'stop'){
-                   console.log('démarrer');
-                   lancer();
-                               runText.destroy();
-               }
-           localStorage.setItem('run', 'running'); //le jeux est en cours, pas d'instance d'un autre jeux
-               
-           });
-           
-            
-            //lancer();
+            localStorage.setItem('run', 'stop'); //enregistrement de l'état du jeux
+
+            document.addEventListener('keyup', (event) => {
+                if (localStorage.getItem('run') == 'stop') {
+                    console.log('démarrer');
+                    lancer();
+                    runText.destroy();
+                }
+                localStorage.setItem('run', 'running'); //le jeux est en cours, pas d'instance d'un autre jeux
+
+            });
+
+            document.getElementById("partie").addEventListener("click", function() {
+                location.reload();
+            });
         </script>
 
     </main>
