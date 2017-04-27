@@ -4,7 +4,7 @@ function lancer() {
     var vaisseau = Crafty.e("2D, Canvas, Color,Vaisseau,Keyboard"); //déclaration du vaisseau
     fps = 200; //initalise la frame à 300 pour démarrer le jeux
     Crafty.timer.FPS(fps); //on lance le jeu
-    
+
     vaisseau.attr({ //initialisaion de la forme du vaisseau
             x: maxX / 2 - 100,
             y: 580,
@@ -13,14 +13,15 @@ function lancer() {
         }) //w taille de du vaisseau (max/2-100 pour center le vaisseau)
         .color("red")
         .bind('KeyDown', function(e) {
-         
-            runText.destroy();
-            
-            
+
+
+
+
             if (e.key == Crafty.keys.LEFT_ARROW) {
-  
+
                 this.x = this.x - 30;
-            } else if (e.key == Crafty.keys.RIGHT_ARROW) {
+            }
+            else if (e.key == Crafty.keys.RIGHT_ARROW) {
                 this.x = this.x + 30;
             }
         });
@@ -38,7 +39,12 @@ function lancer() {
     var decadeH = 100; //décallage horizonal
     var decadeV = 50; //décallage vertical
 
-    for (var i = 0; i < 10; i++) {
+    var ligneBrique = 10;
+    var rangerBrique = 5;
+
+    var totalBrique = ligneBrique + rangerBrique; //nombre total de brique
+
+    for (var i = 0; i < ligneBrique; i++) {
 
         var brique = Crafty.e("2D, Canvas, Color, Brique");
 
@@ -50,7 +56,7 @@ function lancer() {
             }) //w taille de du vaisseau
             .color(256, (i * i * i), 100);
 
-        for (var j = 0; j < 5; j++) {
+        for (var j = 0; j < rangerBrique; j++) {
 
             var brique = Crafty.e("2D, Canvas, Color, Brique");
 
@@ -60,30 +66,18 @@ function lancer() {
                     w: 30,
                     h: 30
                 }) //w taille de du vaisseau
-                .color(256, (aleatoire()*100), 150);
+                .color(256, (aleatoire() * 100), 150);
 
         }
     }
 
+
+
     missile.bind('EnterFrame', function() {
 
                 if (missile.y > 600) { //s'il touche le bas de l'écran #### GAME OVER ####
-                    
-                    Crafty.timer.stop(); //on stop le jeu
-                    // debugger;
-    var gameOver = Crafty.e('2D, Canvas, Color,Text');
-            
-            
-            gameOver.attr({
-                x: maxX / 2 - 50,
-                y: maxY / 2 -100,
-            }).color('red');
 
-            gameOver.text("game over!").textFont({
-                size: '50px',
-                weight: 'bold',
-            });
-
+                    gameOver();
                 } //perdu s'il le missile du jeux fenêtre du bas
 
                 //direction et déplacement vertical
@@ -139,13 +133,16 @@ function lancer() {
         .onHit('Brique', function(collision) { // méthode qui permet de de supprimer la brique
             changeDirection();
             collision[0].obj.destroy();
-            //  debugger;
+            totalBrique = totalBrique - 1;
+            if (totalBrique == 0) {
+                alert("partie gagné!");
+            }
+            // debugger;
         })
         .onHit('Vaisseau', function(collision) { // méthode qui permet de rebondir le missile
-        
-            changeDirection();
+            directionY = 'up';
             vaisseau.attr({ //initialisaion de la forme du vaisseau
-                w: (largeurVaisseau -= 5), //diminuer la taille du vaisseau
+                w: (largeurVaisseau = largeurVaisseau - 5), //diminuer la taille du vaisseau
             });
 
         })
@@ -158,18 +155,40 @@ function changeDirection() {
 
     if (directionY == 'up') {
         directionY = 'down';
-    } else { //sinon cela veut dire que la direction est up
+    }
+    else { //sinon cela veut dire que la direction est up
         directionY = 'up';
     }
-        if (directionX == 'right') {
+    if (directionX == 'right') {
         directionX = 'left';
 
-    } else { //sinon cela veut dire que c'est à right donc il faut passer par left
+    }
+    else { //sinon cela veut dire que c'est à right donc il faut passer par left
         directionX = 'right';
     }
-            fps ++;//augmener de la vitesse
+    fps++; //augmener de la vitesse à chaque rebond missile ou vaisseau
 }
 
 function aleatoire() {
     return Math.random() * (2 - 1) + 1;
+}
+
+
+function gameOver() {
+    Crafty.timer.stop(); //on stop le jeu
+    // debugger;
+    var gameOver = Crafty.e('2D, Canvas, Color,Text');
+
+
+    gameOver.attr({
+        x: maxX / 2 - 50,
+        y: maxY / 2 - 100,
+    }).color('red');
+
+    gameOver.text("game over!").textFont({
+        size: '50px',
+        weight: 'bold',
+    });
+
+
 }

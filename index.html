@@ -26,27 +26,11 @@
         left: 3em;
         display: none;
     }
-    
-    h1 {
-        color: green;
-        position: relative;
-        top: 150px;
-        z-index: 10;
-    }
 </style>
 
 <body>
+    <button>un autre partie</button>
     <main>
-        <!--
-        <div id="startEnd">
-            <div id="intro">appuyer sur une touche
-                <br/> pour commencer le jeux</div>
-            <div id="end">GAME OVER</div>
-
-            <div id="game"></div>
-        </div>
--->
-
         <script>
             //position des limites de la zone 
 
@@ -57,15 +41,15 @@
             var directionX = "right"; //direction horizontal Up ou Down
             var directionY = "up"; //direction vertical Left ou Right 
 
-
+            var fps = 0;
 
             var run = 0; //0 = arret, 1 = en cour de jeux
 
             Crafty.init(maxX, maxY); //initialisation de la fenêtre de jeux
             Crafty.background('rgb(0,0,0)'); //couleur de fond du noir
             var runText = Crafty.e('2D, Canvas, Color,Text');
-            
-            
+
+
             runText.attr({
                 x: maxX / 2 - 200,
                 y: maxY / 2,
@@ -76,7 +60,22 @@
                 weight: 'bold',
             });
 
-            lancer();
+
+
+           localStorage.setItem('run', 'stop'); //enregistrement de l'état du jeux
+      
+           document.addEventListener('keyup', (event) => {
+               if(localStorage.getItem('run') == 'stop'){
+                   console.log('démarrer');
+                   lancer();
+                               runText.destroy();
+               }
+           localStorage.setItem('run', 'running'); //le jeux est en cours, pas d'instance d'un autre jeux
+               
+           });
+           
+            
+            //lancer();
         </script>
 
     </main>
